@@ -1,6 +1,5 @@
 ﻿using Blog.Common;
 using Blog.Data.EFEntities;
-//using Blog.Model.Entity;
 using System;
 using System.Collections.Generic;
 using System.Data.Common;
@@ -9,9 +8,8 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
+
 namespace Blog.Data.Repository
 {
     public class RepositoryBase<TEntity> : IRepositoryBase<TEntity> where TEntity : class, new()
@@ -147,15 +145,15 @@ namespace Blog.Data.Repository
             tempData = tempData.Skip<TEntity>(pagination.rows * (pagination.page - 1)).Take<TEntity>(pagination.rows).AsQueryable();
             return tempData.ToList();
         }
-        public List<TEntity> FindList(string strSql, List<SqlParameter> dbParameter, Pagination pagination)
+        public List<TEntity> FindList(string strSql, SqlParameter[] dbParameter, Pagination pagination)
         {
-            var tempData = dbcontext.Database.SqlQuery<TEntity>(strSql, dbParameter.ToArray()).AsQueryable();
+            var tempData = dbcontext.Database.SqlQuery<TEntity>(strSql, dbParameter).AsQueryable();
             pagination.records = tempData.Count();
             tempData = dbcontext.Database.SqlQuery<TEntity>(strSql, dbParameter.Select(t => ((ICloneable)t).Clone()).ToArray()).AsQueryable();
             tempData = tempData.Skip<TEntity>(pagination.rows * (pagination.page - 1)).Take<TEntity>(pagination.rows).AsQueryable();
             return tempData.ToList();
         }
-        public List<TEntity> FindList(string strSql, DbParameter[] dbParameter)
+        public List<TEntity> FindList(string strSql, SqlParameter[] dbParameter)
         {
             return dbcontext.Database.SqlQuery<TEntity>(strSql, dbParameter).ToList<TEntity>();
         }
@@ -219,16 +217,6 @@ namespace Blog.Data.Repository
         public bool Exists(Expression<Func<TEntity, bool>> predicate)
         {
             return dbcontext.Set<TEntity>().AsNoTracking().Any(predicate);
-        }
-
-        public List<TEntity> FindList(string strSql, SqlParameter[] SqlParameter, Pagination pagination)
-        {
-            throw new NotImplementedException();
-        }
-
-        public List<TEntity> FindList(string strSql, SqlParameter[] SqlParameter)
-        {
-            throw new NotImplementedException();
         }
 
     }

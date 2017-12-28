@@ -10,9 +10,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace Blog.Data.Repository
 {
@@ -124,7 +122,7 @@ namespace Blog.Data.Repository
         {
             return dbcontext.Database.SqlQuery<TEntity>(strSql).ToList<TEntity>();
         }
-        public List<TEntity> FindList<TEntity>(string strSql, DbParameter[] dbParameter) where TEntity : class
+        public List<TEntity> FindList<TEntity>(string strSql, SqlParameter[] dbParameter) where TEntity : class
         {
             return dbcontext.Database.SqlQuery<TEntity>(strSql, dbParameter).ToList<TEntity>();
         }
@@ -185,9 +183,5 @@ namespace Blog.Data.Repository
             return tempData.ToList();
         }
 
-        public List<TEntity> FindList<TEntity>(string strSql, SqlParameter[] dbParameter) where TEntity : class
-        {
-            throw new NotImplementedException();
-        }
     }
 }
