@@ -42,6 +42,7 @@
   <ItemGroup>
     <Compile Include="DTOHelper.cs" />
     <Compile Include="Excel\ExcelHelper.cs" />
+    <Compile Include="Excel\OLEDBHelper.cs" />
     <Compile Include="ExcludeType.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Web\Pagination.cs" />
