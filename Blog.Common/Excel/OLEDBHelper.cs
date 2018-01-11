@@ -26,7 +26,9 @@ namespace Blog.Common.Excel
                 {
                     conn.Open();
 
+                    ///EXCEL文件打开筛选功能以后，会自动增加一个隐藏的Sheet，EXCEL操作见面不可见，但是可以被程序读取到，这里应该留意。
                     //DataTable sheetsName = conn.GetOleDbSchemaTable(OleDbSchemaGuid.Tables, new object[] { null, null, null, "Table" }); //得到所有sheet的名字
+
                     string sql = string.Format("SELECT * FROM [{0}]", sheetName); //查询字符串
 
                     OleDbDataAdapter ada = new OleDbDataAdapter(sql, connstring);
